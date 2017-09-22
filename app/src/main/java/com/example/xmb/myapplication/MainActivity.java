@@ -1,16 +1,23 @@
 package com.example.xmb.myapplication;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button mOneButton, mTwoButton, mThreeButton, mFourButton, mFiveButton, mZeroButton, mSixButton, mSevenButton, mEightButton, mNineButton, mTimeButton, mDevideButton, mEqualButton, mAddButton, mCButton,
-            mOppositeButton, mPercentButton, mMinusButton, mDotButton;
-    private TextView mMonitorTextView;
+    private    int num = 1;
+    private Button mOneButton, mTwoButton, mThreeButton, mFourButton, mFiveButton, mZeroButton, mSixButton, mSevenButton, mEightButton, mNineButton, mTimeButton, mDevideButton, mEqualButton, mAddButton, mCButton,mDotButton,
+            mOppositeButton, mPercentButton, mMinusButton;
+    private TextView mMonitorTextView, mMonitorTextView2;
+    private ImageView mMonitorImageView;
     private Double r, n, m, p, sq, tem, ii;
     private String i, rr;
     private char j, d, e, jj;
@@ -18,9 +25,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initViews();
+        if (ScreenOrient(this)==1){
+        setContentView(R.layout.activity_main);initViews();}
+        else{setContentView(R.layout.activity_heng);
+            horizontalViews();}
+
     }
+    private int ScreenOrient(Activity activity)
+    {
+        int orient = activity.getRequestedOrientation();
+        if(orient != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE && orient != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            WindowManager windowManager = activity.getWindowManager();
+            Display display = windowManager.getDefaultDisplay();
+            int screenWidth  = display.getWidth();
+            int screenHeight = display.getHeight();
+            orient = screenWidth < screenHeight ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        }
+        return orient;
+    }
+    private void horizontalViews() {
+        mMonitorTextView2 = (TextView) this.findViewById(R.id.text2View);
+        mMonitorImageView = (ImageView) this.findViewById(R.id.imageView);
+        mMonitorImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(num<=5){
+                    mMonitorImageView.setImageResource(R.drawable.chijing);
+                    mMonitorTextView2.setText("哟吼，你戳我干啥，还不调回去，难不成你还能戳出花来");
+                    num =num+1;
+                }else if(num==6){
+                    mMonitorImageView.setImageResource(R.drawable.biu);
+                    mMonitorTextView2.setText("❀❀❀❀❀❀❀❀❀❀❀");
+                }
+
+            }
+        });}
 
     private void initViews() {
         i = "0";
@@ -639,3 +678,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+
